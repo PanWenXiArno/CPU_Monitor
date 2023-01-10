@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.11.0, 2023-01-06T15:03:11. -->
+<!-- Written by QtCreator 4.11.0, 2023-01-10T13:48:10. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -287,7 +287,7 @@
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/hanglok/CPU_monitor/CPU_monitor.pro</value>
     <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/home/hanglok/CPU_monitor/CPU_monitor.pro</value>
-    <value type="QString" key="RunConfiguration.Arguments">HelloLiENa</value>
+    <value type="QString" key="RunConfiguration.Arguments">-n firefox</value>
     <value type="bool" key="RunConfiguration.Arguments.multi">false</value>
     <value type="QString" key="RunConfiguration.OverrideDebuggerStartup"></value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>

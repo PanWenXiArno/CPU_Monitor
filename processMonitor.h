@@ -16,7 +16,7 @@
 #include <qdebug.h>
 
 #define VMRSS_LINE 17
-#define VMSIZE_LINE 13
+#define VMSIZE_LINE 18
 #define PROCESS_ITEM 14
 
 typedef struct {
@@ -66,7 +66,9 @@ public:
 
     unsigned int get_proc_virtualmem(unsigned int pid);
 
-    int get_pid(const char* process_name, const char* user = nullptr);
+    int get_pname(const char* process_name, const char* user = nullptr);
+
+    int get_pid(const char* pid);
 
     void outputCPUInfo();
 
@@ -76,4 +78,6 @@ private:
     QTimer outputLoop;
 
     unsigned int pid;
+
+    char file_name[20];
 };

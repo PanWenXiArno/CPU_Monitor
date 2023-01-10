@@ -114,9 +114,7 @@ unsigned int processMonitor::get_proc_mem(unsigned int pid){
     sscanf(line_buff,"%d %d %d %d %d %d %d",&m.size,&m.resident,&m.shared,&m.Trs,&m.Lrs,&m.Drs,&m.dt);
     fclose(fd);
 
-//    printf("m.resident = %d\n",m.resident);
-    return m.size;
-//    return (m.resident+m.shared);
+    return m.resident;
 }
 
 //获取total内存
@@ -144,11 +142,9 @@ unsigned int processMonitor::get_total_mem(){
 }
 
 //获取进程内存占用率
-float processMonitor::get_mem_rate(unsigned int pid){
-//    printf("Process Mem = %d\n",get_proc_mem(pid));
-    printf("Total Mem = %d\n",get_total_mem());
+float processMonitor::get_mem_rate(unsigned int pid)
+{
     float pmem = 100.0 * (get_proc_mem(pid))/(get_total_mem());
-
     return pmem;
 }
 
@@ -180,7 +176,7 @@ unsigned int processMonitor::get_proc_virtualmem(unsigned int pid){
 
 
 //进程本身
-int processMonitor::get_pid(const char* process_name, const char* user)
+int processMonitor::get_pname(const char* process_name, const char* user)
 {
     if(user == nullptr){
         user = getlogin();
@@ -208,22 +204,27 @@ int processMonitor::get_pid(const char* process_name, const char* user)
     return 0;
 }
 
+int processMonitor::get_pid(const char* pid)
+{
+    this->pid = atoi(pid);
+    return 0;
+}
+
 void processMonitor::outputCPUInfo()
 {
-    QFile output("CPU_results.csv");
+    QFile output(file_name);
     QDateTime DateTime = QDateTime::currentDateTime();
     QString time = DateTime.time().toString().toLocal8Bit().data();
     if(output.open(QFile::WriteOnly | QIODevice:: Append))
     {
         QTextStream out(&output);
-        out<<pid<<","<<time<<","<<get_proc_cpu(pid)<<","<<get_mem_rate(pid)<<","<<get_proc_virtualmem(pid)<<endl;
+        out<<pid<<","<<time<<","<<get_proc_cpu(pid)<<","<<get_proc_mem(pid)<<","<<get_proc_virtualmem(pid)<<endl;
     }
     qDebug()<<"Time="<<time;
-    printf("pid=%d\n",pid);
-    printf("pcpu=%f\n",get_proc_cpu(pid));
-    printf("pmem=%f\n",get_mem_rate(pid));
-    printf("virtualmem=%d\n\n",get_proc_virtualmem(pid));
-
+    qDebug()<<"pid="<<pid;
+    qDebug()<<"pcpu="<<get_proc_cpu(pid);
+    qDebug()<<"mem="<<get_proc_mem(pid);
+    qDebug()<<"virtualmem="<<get_proc_virtualmem(pid)<<endl;
 }
 
 void processMonitor::startWork()
@@ -231,11 +232,11 @@ void processMonitor::startWork()
 {
     QObject::connect(&outputLoop, &QTimer::timeout, this, &processMonitor::outputCPUInfo);
     outputLoop.start(2000);
-    QFile output("CPU_results.csv");
+    sprintf(file_name,"%d%s",pid,"CPU_results.csv");
+    QFile output(file_name);
     if(output.open(QFile::WriteOnly))
     {
         QTextStream out(&output);
         out<<"pid,Time,CPU Utility,RAM Comsumption,Virtual Memory Consumption"<<endl;
     }
-
 }
