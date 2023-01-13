@@ -42,10 +42,10 @@ unsigned long processMonitor::get_cpu_total_occupy(){
 
     fgets(buff,sizeof(buff),fd);
     char name[64]={0};
-    sscanf(buff,"%s %ld %ld %ld %ld",name,&t.user,&t.nice,&t.system,&t.idle);
+    sscanf(buff,"%s %ld %ld %ld %ld %ld %ld %ld",name,&t.user,&t.nice,&t.system,&t.idle,&t.iowait,&t.irq,&t.softirq);
     fclose(fd);
 
-    return (t.user + t.nice + t.system + t.idle);
+    return (t.user + t.nice + t.system + t.idle + t.iowait + t.irq + t.softirq);
 }
 
 

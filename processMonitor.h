@@ -24,6 +24,9 @@ typedef struct {
     unsigned long nice;
     unsigned long system;
     unsigned long idle;
+    unsigned long iowait;
+    unsigned long irq;
+    unsigned long softirq;
 }Total_Cpu_Occupy_t;
 
 typedef struct {
@@ -31,7 +34,7 @@ typedef struct {
     unsigned long utime;  //user time
     unsigned long stime;  //kernel time
     unsigned long cutime; //all user time
-        unsigned long cstime; //all dead time
+    unsigned long cstime; //all dead time
 }Proc_Cpu_Occupy_t;
 
 typedef struct {
